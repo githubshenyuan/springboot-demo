@@ -9,4 +9,7 @@
     <version>1.0-SNAPSHOT</version>
 
 
+    <modules>
+        <module>springboot-swagger2-demo</module>
+    </modules>
 </project>

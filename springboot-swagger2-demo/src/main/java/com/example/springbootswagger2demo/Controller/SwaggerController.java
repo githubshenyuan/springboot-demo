@@ -18,7 +18,7 @@ import sun.security.util.Password;
 @Api("用户操作类")
 public class SwaggerController {
     @ApiOperation("查询用户")
-    @GetMapping("/get")
+    @GetMapping("/getUser")
     public String get(String name) {
         System.out.println("查询：" + name);
 
