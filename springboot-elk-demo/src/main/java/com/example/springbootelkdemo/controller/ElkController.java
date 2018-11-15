@@ -12,6 +12,12 @@ import java.util.UUID;
 public class ElkController {
     private static final Logger logger = LoggerFactory.getLogger(ElkController.class);
 
+    @RequestMapping("ng")
+    public String nginx(String name, String pass) {
+        System.out.println("姓名：" + name + "密码" + pass);
+        return "<p>370405198910204031</p>";
+    }
+
     @RequestMapping("elk1")
     public String demo1() {
         MDC.put("processName", "投保流程");
@@ -27,6 +33,9 @@ public class ElkController {
         logger.info("被保险人入库");
         logger.error("被保险人入库失败,数据回滚，请尽快处理");
         int a = 1 / 0;
+
+
+
         return "demo1";
 
     }
@@ -41,6 +50,9 @@ public class ElkController {
         logger.info("退保数据校验通过");
         logger.info("调用第三方接口进行退保操作");
         logger.error("接口调用失败，回退所有操作，请尽快处理");
+        if (true) {
+            throw new RuntimeException();
+        }
         return "demo2";
 
     }

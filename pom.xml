@@ -11,5 +11,6 @@
 
     <modules>
         <module>springboot-swagger2-demo</module>
+        <module>springboot-elk-demo</module>
     </modules>
 </project>
