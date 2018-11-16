@@ -8,5 +8,6 @@ public class SpringbootElkDemoApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(SpringbootElkDemoApplication.class, args);
+        
     }
 }
