@@ -49,7 +49,7 @@
                         "class": "%logger{40}",
                         "processName":"%X{processName:-}",
                         "processId":"%X{processId:-}",
-                        "message": "%message"
+                        "message": "%m%n%wEx"
                         }
                     </pattern>
                 </pattern>
@@ -57,7 +57,7 @@
         </encoder>
     </appender>
     <appender name="INFO_TCP" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-        <destination>10.1.71.213:4560</destination>
+        <destination>192.168.8.32:4560</destination>
         <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
             <providers>
                 <pattern>
@@ -74,7 +74,7 @@
                         "class": "%logger{40}",
                         "processName":"%X{processName:-}",
                         "processId":"%X{processId:-}",
-                        "message": "%message"
+                        "message": "%m%n%wEx"
                         }
                     </pattern>
                 </pattern>
@@ -103,6 +103,8 @@
 
     <root level="INFO">
         <appender-ref ref="INFO_FILE" />
+        <appender-ref ref="INFO_FILE_JSON" />
+
         <!--<appender-ref ref="INFO_TCP" />-->
         <!--<appender-ref ref="INFO_FILE_JSON" />-->
 
