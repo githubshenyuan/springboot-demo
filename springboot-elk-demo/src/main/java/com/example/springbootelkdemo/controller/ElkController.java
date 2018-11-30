@@ -15,6 +15,12 @@ public class ElkController {
     @RequestMapping("ng")
     public String nginx(String name, String pass) {
         System.out.println("姓名：" + name + "密码" + pass);
+
+        logger.info("test info");
+        logger.warn("test warn");
+        logger.error("test error");
+        logger.debug("test debug");
+
         return "<p>370405198910204031</p>";
     }
 
