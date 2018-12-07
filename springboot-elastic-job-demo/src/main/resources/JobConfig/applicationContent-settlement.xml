@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:reg="http://www.dangdang.com/schema/ddframe/reg"
+       xmlns:job="http://www.dangdang.com/schema/ddframe/job"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context.xsd
+                        http://www.dangdang.com/schema/ddframe/reg
+                        http://www.dangdang.com/schema/ddframe/reg/reg.xsd
+                        http://www.dangdang.com/schema/ddframe/job
+                        http://www.dangdang.com/schema/ddframe/job/job.xsd ">
+
+    <!--配置作业注册中心 -->
+    <reg:zookeeper id="regCenter" server-lists="22.8.129.218:2181,22.8.129.219:2181,22.8.129.221:2181"
+                   namespace="elastic-job-test" base-sleep-time-milliseconds="1000" max-sleep-time-milliseconds="3000"
+                   max-retries="3" />
+
+    <!-- 保费结算单送核心-->
+    <job:simple id="demoTest" class="com.example.springbootelasticjobdemo.timer.TestDemo"
+                registry-center-ref="regCenter" sharding-total-count="1" cron="0/1 0/1 0/4 * * ?" overwrite="true"/>
+
+</beans>
