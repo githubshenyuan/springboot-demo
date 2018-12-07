@@ -14,7 +14,7 @@
                         http://www.dangdang.com/schema/ddframe/job/job.xsd ">
 
     <!--配置作业注册中心 -->
-    <reg:zookeeper id="regCenter" server-lists="22.8.129.218:2181,22.8.129.219:2181,22.8.129.221:2181"
+    <reg:zookeeper id="regCenter" server-lists=""
                    namespace="elastic-job-test" base-sleep-time-milliseconds="1000" max-sleep-time-milliseconds="3000"
                    max-retries="3" />
 
