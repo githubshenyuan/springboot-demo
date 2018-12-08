@@ -13,5 +13,7 @@
         <module>springboot-swagger2-demo</module>
         <module>springboot-elk-demo</module>
         <module>springboot-oauth2-demo</module>
+        <module>springboot-https-demo</module>
+        <module>springboot-elastic-job-demo</module>
     </modules>
 </project>
