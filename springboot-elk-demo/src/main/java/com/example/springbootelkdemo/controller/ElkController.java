@@ -3,6 +3,7 @@ package com.example.springbootelkdemo.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -11,9 +12,12 @@ import java.util.UUID;
 @RestController
 public class ElkController {
     private static final Logger logger = LoggerFactory.getLogger(ElkController.class);
+    @Value("${user.dir}")
+    public  String dir;
 
     @RequestMapping("ng")
     public String nginx(String name, String pass) {
+        System.out.println(dir);
         System.out.println("姓名：" + name + "密码" + pass);
 
         logger.info("test info");
