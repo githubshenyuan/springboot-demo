@@ -57,7 +57,7 @@
         </encoder>
     </appender>
     <appender name="INFO_TCP" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-        <destination>192.168.8.32:4560</destination>
+        <destination>192.168.1.112:4560</destination>
         <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
             <providers>
                 <pattern>
@@ -105,7 +105,7 @@
         <appender-ref ref="INFO_FILE" />
         <appender-ref ref="INFO_FILE_JSON" />
 
-        <!--<appender-ref ref="INFO_TCP" />-->
+        <appender-ref ref="INFO_TCP" />
         <!--<appender-ref ref="INFO_FILE_JSON" />-->
 
     </root>
