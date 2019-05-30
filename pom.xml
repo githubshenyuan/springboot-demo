@@ -15,5 +15,6 @@
         <module>springboot-oauth2-demo</module>
         <module>springboot-https-demo</module>
         <module>springboot-elastic-job-demo</module>
+        <module>springboot-restful-demo</module>
     </modules>
 </project>
