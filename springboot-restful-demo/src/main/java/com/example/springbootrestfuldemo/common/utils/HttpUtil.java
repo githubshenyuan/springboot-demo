@@ -45,4 +45,15 @@ public class HttpUtil {
         return inputStream;
     }
 
+    public static <T> T get(String url, Class<T> responseType) {
+        ResponseEntity<T> responseEntity = httpUtil.restTemplate.getForEntity(url, responseType);
+        return responseEntity.getBody();
+    }
+
+    public static <T> T post(String url, Class<T> responseType,Object object) {
+        Class a =object.getClass();
+        HttpEntity httpEntity = new HttpEntity(object, new HttpHeaders());
+        ResponseEntity<T> responseEntity = httpUtil.restTemplate.po(url, responseType);
+        return responseEntity.getBody();
+    }
 }

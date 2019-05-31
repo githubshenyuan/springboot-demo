@@ -45,10 +45,7 @@ public class RestTemplateConfig {
     public HttpClient getHttpClient(@Qualifier("poolingHttpClientConnectionManager") PoolingHttpClientConnectionManager connectionManager ,
                                  @Qualifier("requestConfig") RequestConfig requestConfig) {
 
-        Registry<ConnectionSocketFactory> registry = RegistryBuilder.<ConnectionSocketFactory>create()
-                .register("http", PlainConnectionSocketFactory.getSocketFactory())
-                .register("https", SSLConnectionSocketFactory.getSocketFactory())
-                .build();
+
 
         return HttpClientBuilder.create()
                 // 请求配置
@@ -64,7 +61,11 @@ public class RestTemplateConfig {
      */
     @Bean(name="poolingHttpClientConnectionManager")
     public PoolingHttpClientConnectionManager getConnectionManager() {
-        return new PoolingHttpClientConnectionManager();
+        Registry<ConnectionSocketFactory> registry = RegistryBuilder.<ConnectionSocketFactory>create()
+                .register("http", PlainConnectionSocketFactory.getSocketFactory())
+                .register("https", SSLConnectionSocketFactory.getSocketFactory())
+                .build();
+        return new PoolingHttpClientConnectionManager(registry).de;
         // 此处可设置连接池属性，此处保持默认
 
     }
