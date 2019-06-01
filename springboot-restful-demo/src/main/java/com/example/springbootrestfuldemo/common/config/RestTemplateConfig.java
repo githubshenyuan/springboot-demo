@@ -65,7 +65,7 @@ public class RestTemplateConfig {
                 .register("http", PlainConnectionSocketFactory.getSocketFactory())
                 .register("https", SSLConnectionSocketFactory.getSocketFactory())
                 .build();
-        return new PoolingHttpClientConnectionManager(registry).de;
+        return new PoolingHttpClientConnectionManager(registry);
         // 此处可设置连接池属性，此处保持默认
 
     }

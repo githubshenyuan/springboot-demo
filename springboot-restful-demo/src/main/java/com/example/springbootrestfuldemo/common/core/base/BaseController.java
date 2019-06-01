@@ -1,4 +1,4 @@
-package com.example.springbootrestfuldemo.common.base;
+package com.example.springbootrestfuldemo.common.core.base;
 
 import org.springframework.util.FileCopyUtils;
 
@@ -11,7 +11,7 @@ import java.io.*;
  * @author sh on 2019/3/24 17:13
  * @version ideaIU-2018.2.3.win_home
  */
-public class BaseController {
+public class BaseController{
     @Resource
     HttpServletRequest request;
     @Resource

@@ -8,6 +8,7 @@ import org.springframework.web.client.RestTemplate;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.io.*;
+import java.net.URL;
 import java.util.*;
 
 /**
@@ -45,15 +46,45 @@ public class HttpUtil {
         return inputStream;
     }
 
+    public static String get(String url) {
+        ResponseEntity<String> responseEntity = httpUtil.restTemplate.getForEntity(url, String.class);
+        System.out.println(responseEntity.getBody());
+        return responseEntity.getBody();
+    }
+    public static <T> T  postForEntity(String url,Object object ,Class<T> responseType) {
+        ResponseEntity<T> responseEntity = httpUtil.restTemplate.postForEntity(url, object, responseType);
+        System.out.println(responseEntity.getBody());
+        return responseEntity.getBody();
+    }
+    public static <T> T  postForUTF8(String url,Object object ,Class<T> responseType) {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+        HttpEntity httpEntity = new HttpEntity(object, httpHeaders);
+        ResponseEntity<T> responseEntity = httpUtil.restTemplate.postForEntity(url, httpEntity, responseType);
+        System.out.println(responseEntity.getBody());
+        return responseEntity.getBody();
+    }
+
+    public static <T> T getForEntity(String url, Class<T> responseType) {
+        ResponseEntity<T> responseEntity = httpUtil.restTemplate.getForEntity(url,responseType);
+        System.out.println(responseEntity.getBody().toString());
+        return responseEntity.getBody();
+    }
+
+
     public static <T> T get(String url, Class<T> responseType) {
         ResponseEntity<T> responseEntity = httpUtil.restTemplate.getForEntity(url, responseType);
         return responseEntity.getBody();
     }
 
-    public static <T> T post(String url, Class<T> responseType,Object object) {
-        Class a =object.getClass();
-        HttpEntity httpEntity = new HttpEntity(object, new HttpHeaders());
-        ResponseEntity<T> responseEntity = httpUtil.restTemplate.po(url, responseType);
+    public static String post(String url,String object) {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+        List<String> cookies = new ArrayList<>();
+        cookies.add("R_SESS=token-w8k65:6g9zzdbb7j88nrmbwms5d5pv4zhtztjf5kx29ht9k5424dkz7rg7h6");
+        httpHeaders.put(HttpHeaders.COOKIE,cookies);
+        HttpEntity<String> httpEntity =  new HttpEntity<>(object,httpHeaders);
+        ResponseEntity<String> responseEntity = httpUtil.restTemplate.postForEntity(url,httpEntity,String.class);
         return responseEntity.getBody();
     }
 }
