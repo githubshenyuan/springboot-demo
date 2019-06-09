@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="10 seconds">
+    <!--<include resource="org/springframework/boot/logging/logback/base.xml" />-->
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <springProperty scope="context" name="springAppName" source="spring.application.name"/>
+    <contextName>bocins-travel</contextName>
+    <property name="project_name" value="app"></property>
+    <property name="LOG_PATTERN_CLR"
+    value="%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr([%X{processName},%X{processId}]){yellow} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"/>
+
+    <property name="LOG_PATTERN"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} ${LOG_LEVEL_PATTERN:-%5p} ${PID:- } --- [%15.15t] %-40.40logger{39} [%X{processName},%X{processId}] : %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"/>
+
+    <property name="CONSOLE_LOG_FORM"
+              value="timestamp=%d{yyyy-MM-dd HH:mm:ss.SSS} Level=${LOG_LEVEL_PATTERN:-%5p} message=%m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"/>
+
+    <appender name="CONSOLE_LOG" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+    <appender name="CONSOLE_LOG_CLR" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${LOG_PATTERN_CLR}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="CONSOLE_JSON" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <encoding>utf-8</encoding>
+            <providers>
+                <pattern>
+                    <pattern>
+                        {
+                        "format":"json",
+                        "timestamp": "%date{\"yyyy-MM-dd'T'HH:mm:ss.SSSZ\"}",
+                        "Level": "%level",
+                        "AppName": "${springAppName:-}",
+                        "TraceId": "%X{X-B3-TraceId:-}",
+                        "SpanId": "%X{X-B3-SpanId:-}",
+                        "Export": "%X{X-Span-Export:-}",
+                        "PID": "${PID:-}",
+                        "thread": "%thread",
+                        "class": "%logger{40}",
+                        "processName":"%X{processName:-}",
+                        "processId":"%X{processId:-}",
+                        "message": "%m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}",
+                        "end":"json"
+                        }
+                    </pattern>
+                </pattern>
+            </providers>
+        </encoder>
+    </appender>
+    <!-- 打印json 格式的日志 方便日志收集-->
+    <appender name="INFO_FILE_JSON" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>json_logs/microservice-sinosoft-json-INFO.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>json_logs/microservice-sinosoft-json-%d{yyyyMMdd}.log.%i</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>500MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>3</maxHistory>
+        </rollingPolicy>
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <pattern>
+                    <pattern>
+                        {
+                        "timestamp": "%date{\"yyyy-MM-dd'T'HH:mm:ss.SSSZ\"}",
+                        "Level": "%level",
+                        "AppName": "${springAppName:-}",
+                        "TraceId": "%X{X-B3-TraceId:-}",
+                        "SpanId": "%X{X-B3-SpanId:-}",
+                        "Export": "%X{X-Span-Export:-}",
+                        "PID": "${PID:-}",
+                        "thread": "%thread",
+                        "class": "%logger{40}",
+                        "processName":"%X{processName:-}",
+                        "processId":"%X{processId:-}",
+                        "message": "%m%n%wEx"
+                        }
+                    </pattern>
+                </pattern>
+            </providers>
+        </encoder>
+    </appender>
+    <!--sql执行记录 -->
+    <logger name="druid.sql.Statement" level="DEBUG">
+    </logger>
+
+    <springProfile name="sit">
+        <root level="INFO">
+            <appender-ref ref="CONSOLE_LOG_CLR"/>
+        </root>
+    </springProfile>
+    <springProfile name="uat">
+        <root level="INFO">
+            <appender-ref ref="CONSOLE_JSON"/>
+            <appender-ref ref="INFO_FILE_JSON"/>
+        </root>
+    </springProfile>
+
+</configuration>
