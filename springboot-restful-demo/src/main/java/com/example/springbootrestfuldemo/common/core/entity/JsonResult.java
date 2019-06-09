@@ -1,34 +1,75 @@
 package com.example.springbootrestfuldemo.common.core.entity;
 
-/**
- * @author sh on 2019/6/2 1:38
- * @version ideaIU-2018.2.3.win_home
- */
-public class JsonResult {
+import java.util.Collection;
 
-    private boolean status;
+/**
+ * @author sh 2019/3/21 16:26
+ * @version ideaIU-2018.2.5.win
+ */
+public class JsonResult<T> {
+    private Boolean status;
     private String code;
     private String msg;
+    private Collection<T> datas;
+    private T data;
+    private Object object;
 
-    public JsonResult(){}
-    public JsonResult(boolean status, String code, String msg) {
+    /**
+     * 空的构造函数
+     */
+    public JsonResult() {
+
+    }
+    /**
+     * 构造函数
+     */
+    public JsonResult(Boolean status, String code, String msg, T data, Collection<T> datas) {
         this.status = status;
         this.code = code;
         this.msg = msg;
+        this.data = data;
+        this.datas = datas;
     }
 
 
-    public static JsonResult success() {
-        return new JsonResult(true, "200", "success");
+    public static <E> JsonResult<E> success() {
+        return new JsonResult<E>(true, "200", "success", null, null);
+    }
+
+    public static <E> JsonResult<E> success(String msg) {
+        return new JsonResult<E>(true, "200", msg, null, null);
+    }
+    public static <E> JsonResult<E> success( String code,String msg) {
+        return new JsonResult<E>(true, code, msg, null, null);
+    }
+    public static <E> JsonResult<E> success(String code,String msg,E data) {
+        return new JsonResult<E>(true, code, msg, data, null);
     }
 
 
 
-    public boolean isStatus() {
+
+
+
+    public static <E> JsonResult<E> error() {
+        return new JsonResult<E>(false, null, null, null, null);
+    }
+    public static <E> JsonResult<E> error(String msg) {
+        return new JsonResult<E>(false, null, msg, null, null);
+    }
+    public static <E> JsonResult<E> error(String code ,String msg) {
+        return new JsonResult<E>(false, code, msg, null, null);
+    }
+
+    public static <E> JsonResult<E> error(Boolean status) {
+        return new JsonResult<E>(status, null, null, null, null);
+    }
+
+    public Boolean getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 
@@ -48,8 +89,29 @@ public class JsonResult {
         this.msg = msg;
     }
 
+    public Collection<T> getDatas() {
+        return datas;
+    }
 
+    public void setDatas(Collection<T> datas) {
+        this.datas = datas;
+    }
 
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
+    }
+
+    public Object getObject() {
+        return object;
+    }
+
+    public void setObject(Object object) {
+        this.object = object;
+    }
 
     @Override
     public String toString() {
@@ -57,6 +119,9 @@ public class JsonResult {
                 "status=" + status +
                 ", code='" + code + '\'' +
                 ", msg='" + msg + '\'' +
+                ", datas=" + datas +
+                ", data=" + data +
+                ", object=" + object +
                 '}';
     }
 }
