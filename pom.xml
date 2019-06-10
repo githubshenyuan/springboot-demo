@@ -16,5 +16,6 @@
         <module>springboot-https-demo</module>
         <module>springboot-elastic-job-demo</module>
         <module>springboot-restful-demo</module>
+        <module>springboot-jpa-demo</module>
     </modules>
 </project>
